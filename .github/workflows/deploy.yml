@@ -4,9 +4,14 @@ on:
     branches:
       - main
       - dev
+env: # definicja zmiennych globalnych
+  MONGODB_DB_NAME: gha-demo # klucz wartość zmiennej
 jobs:
   test:
-    environment: testing
+    env: # definicja zmiennych joba
+      MONGODB_CLUSTER_ADDRESS: cluster.test.pl
+      MONGODB_USERNAME: admin
+      MONGODB_PASSWORD: admin
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -18,16 +23,13 @@ jobs:
           key: npm-deps-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
-      - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:XYZ
-      - name: Run tests
-        run: npm test
       - name: Output information
-        run: echo "..."
+        run: |
+          echo "MONGODB_USERNAME: ${{env.MONGODB_USERNAME}}" # w taki sposób też możemy się odnieść do zmiennej
   deploy:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Output information
         run: |        
-          echo "..."
+          echo "$MONGODB_DB_NAME"
