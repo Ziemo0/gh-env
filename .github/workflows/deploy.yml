@@ -27,6 +27,7 @@ jobs:
       - name: Output information
         run: |
           echo "MONGODB_USERNAME: ${{env.MONGODB_USERNAME}}" # w taki sposób też możemy się odnieść do zmiennej
+          echo $TESTING
   deploy:
     needs: test
     runs-on: ubuntu-latest
