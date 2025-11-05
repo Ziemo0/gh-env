@@ -12,6 +12,7 @@ jobs:
       MONGODB_CLUSTER_ADDRESS: cluster.test.pl
       MONGODB_USERNAME: admin
       MONGODB_PASSWORD: admin
+      TESTING: ${{ secrets.TESTING }} # odnosienie się do sekretu nazwanego TESTING na GH
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -32,4 +33,4 @@ jobs:
     steps:
       - name: Output information
         run: |        
-          echo "$MONGODB_DB_NAME"
+          echo "$TESTING"
